@@ -39,13 +39,24 @@ Then install dependencies:
 pip install -r requirements.txt
 ```
 
-#### Windows (CMD or PowerShell):
+#### Windows:
 
-Just run:
+No virtualenv required. Just run:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+### 🔐 Auth (Optional)
+
+Create a `.env` file with your credentials (instead of typing them on every run):
+
+```env
+VIVINO_USERNAME=my.user@vivino.com
+VIVINO_PASSWORD=supersecure
+```
+
+Or pass them interactively when prompted.
 
 ---
 
@@ -108,24 +119,3 @@ Automatically adds:
 ## 🔗 Related Repository
 
 * 🖼 [`vivino-test-images`](https://github.com/p47r1ckp3t3rs3n/vivino-test-images) — Test image library and metadata definitions
-
----
-
-## 🚀 Setup
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-(Optional) create `.env` with credentials:
-
-```env
-VIVINO_USERNAME=you@vivino.com
-VIVINO_PASSWORD=supersecure
-```
-
-Or pass them interactively when prompted.
-
----
