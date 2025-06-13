@@ -15,6 +15,40 @@ Used together with [`vivino-test-images`](https://github.com/p47r1ckp3t3rs3n/viv
 
 ---
 
+## 🧰 Prerequisites
+
+These tools are cross-platform and work on both macOS and Windows.
+
+### ✅ Required:
+
+* Python 3.9+ (install via [python.org](https://www.python.org/downloads/), `brew install python` on macOS, or `winget install Python.Python.3.9` on Windows)
+* Git (optional, for cloning repos)
+
+### ✅ Virtual Environment Setup
+
+#### macOS/Linux (Required):
+
+```bash
+python3 -m venv ~/vivino-scan-env
+source ~/vivino-scan-env/bin/activate
+```
+
+Then install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+#### Windows (CMD or PowerShell):
+
+Just run:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
 ## 🔧 Scripts
 
 ### `upload_and_fetch.py`
@@ -30,6 +64,12 @@ python scripts/upload_and_fetch.py --env testing --label clip
 * `--inject-ocr` → use `ocr_text` if present in metadata
 * `--validate-vintage` → compare returned `vintage_id` to `expected_vintage_id`
 * `--output results_clip.csv` → specify CSV output path
+
+**Full command example:**
+
+```bash
+python scripts/upload_and_fetch.py --env testing --label clip --username my.user@vivino.com --password Password1!
+```
 
 ---
 
