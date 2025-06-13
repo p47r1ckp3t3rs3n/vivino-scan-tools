@@ -64,23 +64,25 @@ Or pass them interactively when prompted.
 
 ### `upload_and_fetch.py`
 
-Uses metadata from `labels.jsonl` to simulate real scan scenarios. Includes support for injecting OCR, crop dimensions, and validating expected vintage matches.
+Uses metadata from `labels.jsonl` to simulate real scan scenarios. Supports:
+
+- Injecting OCR (`ocr_text`) if `--inject-ocr` is passed  
+- Injecting crop box if present in metadata and `--inject-crop` is passed  
+- Validating scan result against `expected_vintage_id` if `--validate-vintage` is passed  
 
 Uploads images and retrieves match results from Vivino’s label scan API.
 
 ```bash
-python scripts/upload_and_fetch.py --env testing --label clip --labels-file ../vivino-test-images/metadata/labels.jsonl
+python scripts/upload_and_fetch.py --env testing --label clip --labels-file ../vivino-test-images/metadata/labels.jsonl --inject-ocr --validate-vintage --output results_clip.csv
 ```
 
 **Optional flags:**
 
-* `--labels-file` → path to labels.jsonl metadata file (required for test automation)
-
-* `--inject-ocr` → use `ocr_text` if present in metadata
-
-* `--validate-vintage` → compare returned `vintage_id` to `expected_vintage_id`
-
-* `--output results_clip.csv` → specify CSV output path
+- `--labels-file` → path to labels.jsonl metadata file (required for test automation)  
+- `--inject-ocr` → use `ocr_text` if present in metadata  
+- `--inject-crop` → use `crop_x/y/width/height` if present  
+- `--validate-vintage` → compare returned `vintage_id` to `expected_vintage_id`  
+- `--output results_clip.csv` → specify CSV output path
 
 **Full command example:**
 
