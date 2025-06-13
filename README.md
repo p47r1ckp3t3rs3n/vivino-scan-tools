@@ -1,68 +1,91 @@
 # Vivino Scan Tools
 
-This repo provides tooling to upload label images to the Vivino scan API, collect scan results, compare system outputs (e.g. Vuforia vs CLIP), and validate scan accuracy.
+This repository contains tools to simulate and validate Vivino scan behavior using test images and ground truth data.
 
-Used together with [`vivino-test-images`](https://github.com/p47r1ckp3t3rs3n/vivino-test-images), this enables testing and benchmarking across real-world wine label scenarios.
-
----
-
-## 📦 Structure
-
-- `/scripts/` — Python tools for uploading, comparing, and generating test metadata
-- `/config/` — Optional configuration files (e.g. `.env` with API secrets)
-- `/tests/` — Unit tests and test utilities (optional)
+Used together with [`vivino-test-images`](https://github.com/p47r1ckp3t3rs3n/vivino-test-images), it provides a full pipeline for testing recognition logic across image uploads, OCR injection, and backend comparison (e.g. CLIP vs Vuforia).
 
 ---
 
-## 🛠 Tools
+## 📁 Structure
+
+* `/scripts/` — Core CLI scripts for uploading, comparing, and generating metadata
+* `/config/` — Optional configuration (e.g. `.env` with credentials)
+* `/tests/` — (Optional) test utilities and validation helpers
+* `requirements.txt` — Python package dependencies
+
+---
+
+## 🔧 Scripts
 
 ### `upload_and_fetch.py`
-Uploads a set of images (from labels.jsonl) and fetches recognition results.
+
+Uploads images and retrieves match results from Vivino’s label scan API.
 
 ```bash
 python scripts/upload_and_fetch.py --env testing --label clip
 ```
 
-## Optional flags:
+**Optional flags:**
 
---inject-ocr — inject ocr_text if available
+* `--inject-ocr` → use `ocr_text` if present in metadata
+* `--validate-vintage` → compare returned `vintage_id` to `expected_vintage_id`
+* `--output results_clip.csv` → specify CSV output path
 
---validate-vintage — check result against expected_vintage_id
+---
 
-## compare_runs.py
-Compares two result files (e.g. from clip and vuforia runs), enriches with metadata, and outputs Excel with side-by-side diffs.
+### `compare_runs.py`
+
+Compares scan result CSVs from two systems, enriches with metadata, and categorizes mismatches.
 
 ```bash
 python scripts/compare_runs.py results_clip.csv results_vuforia.csv --output comparison.xlsx --use-cache
 ```
-## generate_from_curls.py
-Converts raw curl logs from real mobile scans into valid labels.jsonl entries.
+
+**Output includes:**
+
+* Side-by-side wine metadata
+* Match categorization (`Exact match`, `Same wine, different vintage`, etc.)
+* Links to original images and matched Vivino wine pages
+
+---
+
+### `generate_from_curls.py`
+
+Parses real `curl` commands from device logs and generates `labels.jsonl` entries.
+
 ```bash
 python scripts/generate_from_curls.py curl_logs.txt > new_labels.jsonl
 ```
 
-## 🔗 Related Repo
-- 🖼 vivino-test-images: test image library and metadata
+Automatically adds:
 
-## 🧪 Development
+* `ocr_text` from request
+* `crop_x/y/width/height` if present
+* Tags like `ocr`, `requires_crop` if implied
+
+---
+
+## 🔗 Related Repository
+
+* 🖼 [`vivino-test-images`](https://github.com/p47r1ckp3t3rs3n/vivino-test-images) — Test image library and metadata definitions
+
+---
+
+## 🚀 Setup
+
 Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
-Create a .env file with:
-```env
-VIVINO_USERNAME=your_email
-VIVINO_PASSWORD=your_password
-```
-Or pass them interactively at runtime.
-```yaml
-```
----
 
-## 📦 `requirements.txt`
-```txt
-requests
-pandas
-openpyxl
-urllib3
+(Optional) create `.env` with credentials:
+
+```env
+VIVINO_USERNAME=you@vivino.com
+VIVINO_PASSWORD=supersecure
 ```
+
+Or pass them interactively when prompted.
+
+---
