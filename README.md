@@ -26,7 +26,7 @@ These tools are cross-platform and work on both macOS and Windows.
 
 ### ✅ Virtual Environment Setup
 
-#### macOS/Linux:
+#### macOS/Linux (Required):
 
 ```bash
 python3 -m venv ~/vivino-scan-env
@@ -64,22 +64,28 @@ Or pass them interactively when prompted.
 
 ### `upload_and_fetch.py`
 
+Uses metadata from `labels.jsonl` to simulate real scan scenarios. Includes support for injecting OCR, crop dimensions, and validating expected vintage matches.
+
 Uploads images and retrieves match results from Vivino’s label scan API.
 
 ```bash
-python scripts/upload_and_fetch.py --env testing --label clip
+python scripts/upload_and_fetch.py --env testing --label clip --labels-file ../vivino-test-images/metadata/labels.jsonl
 ```
 
 **Optional flags:**
 
+* `--labels-file` → path to labels.jsonl metadata file (required for test automation)
+
 * `--inject-ocr` → use `ocr_text` if present in metadata
+
 * `--validate-vintage` → compare returned `vintage_id` to `expected_vintage_id`
+
 * `--output results_clip.csv` → specify CSV output path
 
 **Full command example:**
 
 ```bash
-python scripts/upload_and_fetch.py --env testing --label clip --username my.user@vivino.com --password Password1!
+python scripts/upload_and_fetch.py --env testing --label clip --username my.user@vivino.com --password Password1! --labels-file ../vivino-test-images/metadata/labels.jsonl
 ```
 
 ---
