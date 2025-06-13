@@ -26,7 +26,7 @@ These tools are cross-platform and work on both macOS and Windows.
 
 ### ✅ Virtual Environment Setup
 
-#### macOS/Linux (Required):
+#### macOS/Linux:
 
 ```bash
 python3 -m venv ~/vivino-scan-env
