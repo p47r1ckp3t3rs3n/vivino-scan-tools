@@ -127,7 +127,17 @@ python scripts/generate_groundtruth.py --curls curl_logs.txt --out-dir output_fo
 python scripts/generate_groundtruth.py --csv labels.csv --curls curl_logs.txt --out-dir output_folder
 ```
 
-The generated metadata can be used for validation, comparison, and automated scan tests.
+**Optional flags:**
+
+* `--skip-download` → generate metadata only, don’t download any images
+* `--added-by` → tag entries with custom author name
+
+The generated output includes:
+
+* a `/images` folder inside the specified output directory (if CSV used)
+* a timestamped `labels_YYYYMMDD_HHMMSS.jsonl` metadata file
+
+This is used for downstream validation, regression comparison, and automated scan tests.
 
 ---
 
