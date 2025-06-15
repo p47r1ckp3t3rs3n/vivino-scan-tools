@@ -65,9 +65,9 @@ Or pass them interactively when prompted.
 
 Uses metadata from `labels.jsonl` to simulate real scan scenarios. Supports:
 
-- Injecting OCR (`ocr_text`) if `--inject-ocr` is passed  
-- Injecting crop box if present in metadata and `--inject-crop` is passed  
-- Validating scan result against `expected_vintage_id` if `--validate-vintage` is passed  
+* Injecting OCR (`ocr_text`) if `--inject-ocr` is passed
+* Injecting crop box if present in metadata and `--inject-crop` is passed
+* Validating scan result against `expected_vintage_id` if `--validate-vintage` is passed
 
 Uploads images and retrieves match results from Vivino’s label scan API.
 
@@ -77,11 +77,11 @@ python scripts/upload_and_fetch.py --env testing --label clip --labels-file ../v
 
 **Optional flags:**
 
-- `--labels-file` → path to labels.jsonl metadata file (required for test automation)  
-- `--inject-ocr` → use `ocr_text` if present in metadata  
-- `--inject-crop` → use `crop_x/y/width/height` if present  
-- `--validate-vintage` → compare returned `vintage_id` to `expected_vintage_id`  
-- `--output results_clip.csv` → specify CSV output path
+* `--labels-file` → path to labels.jsonl metadata file (required for test automation)
+* `--inject-ocr` → use `ocr_text` if present in metadata
+* `--inject-crop` → use `crop_x/y/width/height` if present
+* `--validate-vintage` → compare returned `vintage_id` to `expected_vintage_id`
+* `--output results_clip.csv` → specify CSV output path
 
 **Full command example:**
 
@@ -107,19 +107,27 @@ python scripts/compare_runs.py results_clip.csv results_vuforia.csv --output com
 
 ---
 
-### `generate_from_curls.py`
+### `generate_groundtruth.py`
 
-Parses real `curl` commands from device logs and generates `labels.jsonl` entries.
+Generates a complete `labels.jsonl` metadata file from either:
+
+* a CSV of manually verified scans (e.g. from `label_scan_verifications`)
+* raw cURL logs (like intercepted uploads from devices)
+
+When run with CSV input, it will also download the associated images and rename them accordingly.
 
 ```bash
-python scripts/generate_from_curls.py curl_logs.txt > new_labels.jsonl
+# From CSV only (downloads images too)
+python scripts/generate_groundtruth.py --csv labels.csv --out-dir output_folder
+
+# From cURL logs only (metadata only)
+python scripts/generate_groundtruth.py --curls curl_logs.txt --out-dir output_folder
+
+# From both sources
+python scripts/generate_groundtruth.py --csv labels.csv --curls curl_logs.txt --out-dir output_folder
 ```
 
-Automatically adds:
-
-* `ocr_text` from request
-* `crop_x/y/width/height` if present
-* Tags like `ocr`, `requires_crop` if implied
+The generated metadata can be used for validation, comparison, and automated scan tests.
 
 ---
 
