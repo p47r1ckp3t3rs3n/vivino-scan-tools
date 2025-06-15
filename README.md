@@ -10,7 +10,6 @@ Used together with [`vivino-test-images`](https://github.com/p47r1ckp3t3rs3n/viv
 
 * `/scripts/` — Core CLI scripts for uploading, comparing, and generating metadata
 * `/config/` — Optional configuration (e.g. `.env` with credentials)
-* `/tests/` — (Optional) test utilities and validation helpers
 * `requirements.txt` — Python package dependencies
 
 ---
